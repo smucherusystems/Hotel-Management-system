@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Hotel | Experience Elegance</title>
+    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Background Containers for Each Page -->
+    <div class="background-container home-bg"></div>
+    <div class="background-container rooms-bg" style="display: none;"></div>
+    <div class="background-container dining-bg" style="display: none;"></div>
+    <div class="background-container spa-bg" style="display: none;"></div>
+
+       <header>
+        <div class="logo">LUXURY <span>HOTEL</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active-nav" onclick="showPage('home'); return false;">Home</a></li>
+                <li><a href="#rooms" onclick="showPage('rooms'); return false;">Rooms</a></li>
+                <li><a href="#dining" onclick="showPage('dining'); return false;">Dining</a></li>
+                <li><a href="#spa" onclick="showPage('spa'); return false;">Spa</a></li>
+                <li><a href="#booking" onclick="showPage('booking'); return false;" class="btn" style="padding: 8px 20px; font-size: 14px;">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <h1>Experience Unmatched Luxury</h1>
+            <p>Indulge in the perfect blend of comfort, elegance, and exceptional service at our world-class hotel.</p>
+            <div class="hero-buttons">
+                <button class="btn" onclick="showPage('rooms')">View Our Rooms</button>
+                <button class="btn btn-outline" onclick="showPage('dining')">Explore Dining</button>
+                <button class="btn btn-outline" onclick="showPage('spa')">Discover Spa</button>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature" onclick="showPage('rooms')">
+                <i class="fas fa-bed"></i>
+                <h3>Luxury Accommodations</h3>
+                <p>Experience ultimate comfort in our beautifully appointed rooms and suites with premium amenities.</p>
+            </div>
+            <div class="feature" onclick="showPage('dining')">
+                <i class="fas fa-utensils"></i>
+                <h3>Fine Dining</h3>
+                <p>Savor exquisite culinary creations at our award-winning restaurants and elegant bars.</p>
+            </div>
+            <div class="feature" onclick="showPage('spa')">
+                <i class="fas fa-spa"></i>
+                <h3>Luxury Spa</h3>
+                <p>Rejuvenate your mind and body with our exclusive spa treatments and wellness programs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Page -->
+    <section id="rooms" class="page">
+        <h2 class="page-title">Our Rooms & Suites</h2>
+        <p class="page-subtitle">Each of our rooms and suites is designed to provide the ultimate in comfort and luxury, with premium amenities and breathtaking views.</p>
+        
+        <div id="roomsContainer" class="rooms-container">
+            <!-- Rooms will be dynamically loaded from API -->
+        </div>
+    </section>
+
+    <!-- Dining Page -->
+    <section id="dining" class="page">
+        <h2 class="page-title">Dining Experiences</h2>
+        <p class="page-subtitle">Savor exquisite culinary creations prepared by our world-class chefs in stunning settings that enhance every dining experience.</p>
+        <div class="dining-actions">
+            <button class="btn" onclick="openOrderSection(); return false;">
+                <i class="fas fa-concierge-bell"></i> Order In-Room Dining
+            </button>
+            <button class="btn btn-outline" onclick="openMenuModal('bar'); return false;">
+                <i class="fas fa-cocktail"></i> View Bar Menu
+            </button>
+            <button class="btn btn-outline" onclick="openMenuModal('cafe'); return false;">
+                <i class="fas fa-coffee"></i> View Café Menu
+            </button>
+        </div>
+        
+        <div class="dining-container">
+            <div class="dining-card">
+                <div class="dining-image" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                <div class="dining-details">
+                    <h3 class="dining-title">The Grand Restaurant</h3>
+                    <p class="dining-hours">Breakfast: 7am-11am | Lunch: 12pm-3pm | Dinner: 6pm-11pm</p>
+                    <p class="dining-price">$$$</p>
+                    <p class="dining-description">Our signature restaurant offering international cuisine with a modern twist, featuring seasonal ingredients from local producers.</p>
+                    <button class="btn" onclick="showPage('booking')">Make Reservation</button>
+                </div>
+            </div>
+            
+            <div class="dining-card">
+                <div class="dining-image" style="background-image: url('https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                <div class="dining-details">
+                    <h3 class="dining-title">Skyline Bar & Lounge</h3>
+                    <p class="dining-hours">Open: 4pm-1am</p>
+                    <p class="dining-price">$$</p>
+                    <p class="dining-description">Enjoy crafted cocktails, fine wines, and light bites while taking in breathtaking panoramic views of the city from our rooftop bar.</p>
+                    <button class="btn" onclick="showPage('booking')">Make Reservation</button>
+                </div>
+            </div>
+            
+            <div class="dining-card">
+                <div class="dining-image" style="background-image: url('https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                <div class="dining-details">
+                    <h3 class="dining-title">The Garden Café</h3>
+                    <p class="dining-hours">Open: 6am-10pm</p>
+                    <p class="dining-price">$</p>
+                    <p class="dining-description">A casual yet elegant setting for light meals, afternoon tea, and coffee, surrounded by our beautiful indoor garden.</p>
+                    <button class="btn" onclick="showPage('booking')">Make Reservation</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="diningContainer" class="dining-container">
+            <!-- Meals will be dynamically loaded from API -->
+        </div>
+
+        <div id="dining-order" class="dining-order-wrapper">
+            <button class="close-order-wrapper" onclick="closeOrderSection()">&times;</button>
+            <div class="order-intro">
+                <h3><i class="fas fa-concierge-bell"></i> In-House Dining & Room Service</h3>
+                <p>Select from our curated menu, add items to your cart, and place an order for restaurant dining or room service.</p>
+            </div>
+
+            <div class="order-layout">
+                <aside class="order-sidebar">
+                    <div class="sidebar-section">
+                        <h4><i class="fas fa-filter"></i> Filter Menu</h4>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="menuSearch" placeholder="Search menu items...">
+                        </div>
+
+                        <div class="filter-group">
+                            <label><i class="fas fa-shopping-cart"></i> Order Type</label>
+                            <select id="orderType" class="filter-select">
+                                <option value="restaurant">Restaurant</option>
+                                <option value="room_service">Room Service</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group" id="bookingGroup" style="display: none;">
+                            <label><i class="fas fa-calendar-check"></i> Booking</label>
+                            <select id="bookingSelect" class="filter-select">
+                                <option value="">Select Booking...</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group" id="roomNumberGroup" style="display: none;">
+                            <label><i class="fas fa-door-open"></i> Room Number</label>
+                            <input type="text" id="roomNumber" class="filter-input" placeholder="Enter room number">
+                        </div>
+
+                        <div class="filter-group">
+                            <label><i class="fas fa-list"></i> Category</label>
+                            <div class="category-filters">
+                                <button class="filter-btn active" data-category="all">All Items</button>
+                                <button class="filter-btn" data-category="Restaurant">Restaurant</button>
+                                <button class="filter-btn" data-category="Bar">Bar</button>
+                                <button class="filter-btn" data-category="Cafe">Café</button>
+                                <button class="filter-btn" data-category="Dessert">Desserts</button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <main class="order-main">
+                    <div class="order-main-header">
+                        <h4><i class="fas fa-utensils"></i> Menu</h4>
+                        <p>Browse our menu and add items to your cart.</p>
+                    </div>
+                    <div id="menuItemsContainer" class="menu-items-grid">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Loading menu...
+                        </div>
+                    </div>
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <h3>No items found</h3>
+                        <p>Try adjusting your search or filters.</p>
+                    </div>
+                </main>
+
+                <aside class="cart-sidebar" id="cartSidebar">
+                    <div class="cart-header">
+                        <h4><i class="fas fa-shopping-cart"></i> Your Order</h4>
+                        <button class="close-cart" onclick="toggleOrderCart()"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    <div class="cart-content">
+                        <div class="cart-section">
+                            <label><i class="fas fa-user"></i> Customer Name *</label>
+                            <input type="text" id="customerName" placeholder="Enter your name" required>
+                        </div>
+
+                        <div id="cartItems" class="cart-items">
+                            <div class="cart-empty">
+                                <i class="fas fa-shopping-bag"></i>
+                                <p>Your cart is empty</p>
+                                <p class="cart-empty-hint">Add items from the menu to get started</p>
+                            </div>
+                        </div>
+
+                        <div class="cart-section">
+                            <label><i class="fas fa-comment"></i> Special Instructions</label>
+                            <textarea id="specialInstructions" rows="3" placeholder="Any special requests or dietary requirements?"></textarea>
+                        </div>
+
+                        <div class="cart-summary">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (10%):</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="cart-actions">
+                            <button class="btn btn-clear" type="button" onclick="clearOrderCart()"><i class="fas fa-trash"></i> Clear Cart</button>
+                            <button class="btn btn-submit" type="button" id="submitOrderBtn" disabled onclick="submitOrder()">
+                                <i class="fas fa-check"></i> Place Order
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <button class="cart-toggle-btn" onclick="toggleOrderCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Modals -->
+        <div id="confirmModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-check-circle"></i> Confirm Order</h3>
+                    <button class="close-modal" onclick="closeOrderConfirmModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="confirmModalBody"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeOrderConfirmModal()">Cancel</button>
+                    <button class="btn" onclick="confirmMealOrder()">Confirm & Place Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="successModal" class="modal">
+            <div class="modal-content success-modal">
+                <div class="modal-header success-header">
+                    <h3><i class="fas fa-check-circle"></i> Order Placed Successfully!</h3>
+                    <button class="close-modal" onclick="closeOrderSuccessModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="successModalBody"></div>
+                <div class="modal-footer">
+                    <button class="btn" onclick="closeOrderSuccessModal()">Continue</button>
+                    <button class="btn btn-outline" onclick="openOrderSection()">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing your order...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spa Page -->
+    <section id="spa" class="page">
+        <h2 class="page-title">Spa & Wellness</h2>
+        <p class="page-subtitle">Rejuvenate your mind, body, and spirit with our exclusive spa treatments and wellness programs in a tranquil oasis of relaxation.</p>
+        
+        <div id="spaContainer" class="spa-container">
+            <!-- Spa services will be dynamically loaded from API -->
+        </div>
+
+        <div class="spa-hours">
+            <h3 style="color: var(--primary); margin-bottom: 30px; font-size: 1.8rem;">Spa Hours</h3>
+            <div id="spaHours" class="hours-grid">
+                <!-- Spa hours will be dynamically loaded from API -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Page -->
+    <section id="booking" class="page">
+        <div class="booking-page-container">
+            <div class="booking-header">
+                <h2 class="page-title">Complete Your Booking</h2>
+                <p class="page-subtitle">Fill in your details to confirm your reservation</p>
+            </div>
+
+            <form id="bookingForm" class="modern-booking-form" onsubmit="handleBookingSubmit(event)">
+                <div class="booking-form-grid">
+                    <!-- Left Column: Form Sections -->
+                    <div class="booking-form-left">
+                        <!-- Guest Information Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-user"></i>
+                                <h3>Guest Information</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+                                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                                    <span class="error-message" id="fullNameError"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                                    <span class="error-message" id="emailError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+1 (555) 123-4567">
+                                    <span class="error-message" id="phoneError"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="idNumber">ID/Passport Number *</label>
+                                    <input type="text" id="idNumber" name="idNumber" required placeholder="Enter ID or Passport number">
+                                    <span class="error-message" id="idNumberError"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stay Details Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-calendar-alt"></i>
+                                <h3>Stay Details</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkInDate">Check-in Date *</label>
+                                    <input type="date" id="checkInDate" name="checkInDate" required>
+                                    <span class="error-message" id="checkInError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkOutDate">Check-out Date *</label>
+                                    <input type="date" id="checkOutDate" name="checkOutDate" required>
+                                    <span class="error-message" id="checkOutError"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="numGuests">Number of Guests *</label>
+                                    <select id="numGuests" name="numGuests" required>
+                                        <option value="">Select guests</option>
+                                        <option value="1">1 Guest</option>
+                                        <option value="2" selected>2 Guests</option>
+                                        <option value="3">3 Guests</option>
+                                        <option value="4">4 Guests</option>
+                                        <option value="5">5 Guests</option>
+                                        <option value="6">6 Guests</option>
+                                        <option value="7">7 Guests</option>
+                                        <option value="8">8 Guests</option>
+                                    </select>
+                                    <span class="error-message" id="guestsError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="roomTypeSelect">Room Type *</label>
+                                    <select id="roomTypeSelect" name="roomTypeSelect" required>
+                                        <option value="">Select room type</option>
+                                        <option value="Deluxe">Deluxe Room</option>
+                                        <option value="Executive">Executive Suite</option>
+                                        <option value="Presidential">Presidential Suite</option>
+                                        <option value="Junior">Junior Suite</option>
+                                        <option value="Family">Family Suite</option>
+                                        <option value="Ocean">Ocean View</option>
+                                        <option value="Penthouse">Penthouse Suite</option>
+                                        <option value="Standard">Standard Room</option>
+                                    </select>
+                                    <span class="error-message" id="roomTypeError"></span>
+                                </div>
+                            </div>
+                            <div class="price-calculation">
+                                <div class="price-row">
+                                    <span>Price per night:</span>
+                                    <span id="pricePerNight">$0.00</span>
+                                </div>
+                                <div class="price-row">
+                                    <span>Number of nights:</span>
+                                    <span id="numberOfNights">0</span>
+                                </div>
+                                <div class="price-row total">
+                                    <span>Subtotal:</span>
+                                    <span id="subtotalPrice">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment & Confirmation Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <i class="fas fa-credit-card"></i>
+                                <h3>Payment & Confirmation</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="paymentMethod">Payment Method *</label>
+                                    <select id="paymentMethod" name="paymentMethod" required>
+                                        <option value="">Select payment method</option>
+                                        <option value="cash">Cash</option>
+                                        <option value="card">Card</option>
+                                        <option value="mpesa">Mpesa</option>
+                                    </select>
+                                    <span class="error-message" id="paymentError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="discountCode">Discount Code (Optional)</label>
+                                    <input type="text" id="discountCode" name="discountCode" placeholder="Enter discount code">
+                                </div>
+                            </div>
+                            <div class="total-amount-display">
+                                <div class="total-label">Total Amount</div>
+                                <div class="total-value" id="totalAmount">$0.00</div>
+                            </div>
+                            <button type="submit" class="btn btn-confirm" id="confirmBookingBtn">
+                                <i class="fas fa-check-circle"></i> Confirm Booking
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Room Preview -->
+                    <div class="booking-form-right">
+                        <div class="room-preview-card">
+                            <div class="preview-header">
+                                <h3><i class="fas fa-bed"></i> Room Preview</h3>
+                            </div>
+                            <div id="roomPreviewContent" class="room-preview-content">
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>Select a room type to see details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="bookingSuccessModal" class="booking-modal">
+            <div class="modal-content success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Booking Confirmed!</h2>
+                <div class="success-details" id="successDetails">
+                    <!-- Success details will be inserted here -->
+                </div>
+                <div class="success-actions">
+                    <button class="btn" onclick="closeSuccessModal()">Continue</button>
+                    <a href="Index.html" class="btn btn-outline">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Modals -->
+    <!-- Bar Menu Modal -->
+    <div id="barMenuModal" class="menu-modal">
+        <div class="menu-modal-content">
+            <div class="menu-modal-header">
+                <h2>Skyline Bar & Lounge Menu</h2>
+                <span class="close-modal" onclick="closeMenuModal('bar')">&times;</span>
+            </div>
+            <div class="menu-modal-body" id="barMenuContent">
+                <!-- Bar menu content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cafe Menu Modal -->
+    <div id="cafeMenuModal" class="menu-modal">
+        <div class="menu-modal-content">
+            <div class="menu-modal-header">
+                <h2>The Garden Café Menu</h2>
+                <span class="close-modal" onclick="closeMenuModal('cafe')">&times;</span>
+            </div>
+            <div class="menu-modal-body" id="cafeMenuContent">
+                <!-- Cafe menu content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>123 Luxury Avenue<br>Prestige City, PC 10001</p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Email: info@luxuryhotel.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: #d4af37; margin: 0 10px; font-size: 20px;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #d4af37; margin: 0 10px; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #d4af37; margin: 0 10px; font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive exclusive offers and updates.</p>
+                <input type="email" placeholder="Your email" style="padding: 10px; margin-top: 10px; width: 100%; border: none; border-radius: 4px; background: rgba(255,255,255,0.1); color: white;">
+                <button class="btn" style="margin-top: 10px; width: 100%; padding: 10px;">Subscribe</button>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Luxury Hotel. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
