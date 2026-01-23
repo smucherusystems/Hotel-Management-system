@@ -1,91 +1,247 @@
 # Hotel Booking System
 
-A simple hotel booking web app (Node.js/Express backend + vanilla JS frontend).
+A comprehensive hotel management system with room booking, service ordering, caching layers, and admin management.
 
-## Quick overview
+## 🔍 Quick Overview
+- **Backend**: Node.js + Express (`Backend/`)
+- **Frontend**: Responsive web interface (`Frontend/`)
+- **Databases & Caching**:
+  - **MySQL** – Primary persistent database
+  - **In-Memory Cache (L1)** – Fast runtime cache (JS Map)
+  - **Redis Cache (L2)** – Distributed cache (optional but recommended)
+- **Authentication**: JWT-based authentication
+- **Architecture**: Cache-first (L1 → L2 → MySQL)
+- **Features**:
+  - Room booking & availability
+  - Customer & booking management
+  - Meal & spa service ordering
+  - Admin dashboard & analytics
+  - High-performance caching strategy
 
-- Backend: Node.js + Express (in `Backend/`) talking to MySQL.
-- Frontend: Static files in `Frontend/` (open `Index.html` or serve with a static server).
-- Database: SQL files live in `Backend/database/` and the root `database/` folder.
-
-## Quickstart (development)
-
-1. Backend
-   - Open a terminal and navigate to `Backend`:
-     ```powershell
-     cd "c:\Users\Administrator\Desktop\db\Hotel Booking System\Backend"
-     ```
-   - Create/update `hotel.env` with your DB credentials (example keys below):
-     ```text
-     DB_HOST=localhost
-     DB_USER=root
-     DB_PASSWORD=your_mysql_password
-     DB_NAME=luxury_hotel
-     PORT=3000
-     JWT_SECRET=your_secret_key
-     NODE_ENV=development
-     ```
-   - Install dependencies and start the server:
-     ```powershell
-     npm install
-     npm start
-     # or for dev with nodemon (if configured): npm run dev
-     ```
-   - Server will listen on the port from `hotel.env` (default: 3000).
-
-2. Frontend
-   - Open `Frontend\Index.html` directly in your browser for quick testing, or serve the `Frontend` folder with a simple HTTP server to avoid CORS issues:
-     ```powershell
-     cd "c:\Users\Administrator\Desktop\db\Hotel Booking System\Frontend"
-     # With Python 3
-     python -m http.server 8080
-     # Or using http-server (Node): npm install -g http-server; http-server -p 8080
-     ```
-   - Open `http://localhost:8080` (if served) or open the file directly.
-
-3. Database
-   - Create the database and run the SQL in `Backend/database/database.sql` or `database/database.sql` to create tables and sample data.
-
-## Git: prepare and push changes
-
-Use these commands in PowerShell from the project root to commit and push your changes to the `main` branch:
-
-```powershell
-cd "c:\Users\Administrator\Desktop\db\Hotel Booking System"
-# Check status
-git status
-# Stage your changes
-git add README.md
-# Commit with a helpful message
-git commit -m "docs: update README for pushing"
-# Push to the main branch
-git push origin main
+## 🧠 System Architecture (With Caching)
+```
+Client
+  ↓
+API (Express)
+  ↓
+L1 Cache (In-Memory)
+  ↓ (cache miss)
+L2 Cache (Redis)
+  ↓ (cache miss)
+MySQL Database
 ```
 
-If your local repo has no remote yet, add it first (replace <remote-url>):
+### Cache Strategy
+- **L1 (In-Memory)**: Ultra-fast, per-server, volatile
+- **L2 (Redis)**: Shared, persistent across restarts
+- **MySQL**: Source of truth
 
-```powershell
-git remote add origin <remote-url>
-git push -u origin main
+## 📁 Project Structure
+```
+Hotel Booking System/
+├── Backend/
+│   ├── server.js
+│   ├── cache/
+│   │   ├── memoryStore.js     # L1 in-memory cache
+│   │   └── redisClient.js     # L2 Redis client
+│   ├── database/
+│   │   └── database.sql
+│   ├── routes/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── hotel.env
+│   └── package.json
+│
+├── Frontend/
+│   └── index.html
+│
+└── README.md
 ```
 
-Notes:
-- Use descriptive commit messages. If you need to include other changed files, `git add .` will stage all modified files.
-- If the push is rejected, you may need to pull and rebase first: `git pull --rebase origin main` then push again.
+## ⚙️ Technologies Used
+| Layer | Technology |
+|-------|------------|
+| **Backend** | Node.js, Express |
+| **Auth** | JWT |
+| **Database** | MySQL |
+| **L1 Cache** | JavaScript In-Memory (Map) |
+| **L2 Cache** | Redis |
+| **Frontend** | HTML, CSS, JavaScript |
 
-## What changed in this README
+## 🚀 Quickstart (Development)
 
-- Shortened and focused instructions for local dev and pushing changes.
-- Included PowerShell-friendly commands for Windows environment.
+### 1️⃣ Backend Setup
+```powershell
+cd "c:\Users\Administrator\Desktop\db\Hotel Booking System\Backend"
+```
+
+Create or update `hotel.env`:
+```env
+# MySQL
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=luxury_hotel
+
+# Server
+PORT=3000
+NODE_ENV=development
+
+# Auth
+JWT_SECRET=your_secret_key
+
+# Redis (optional but recommended)
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_ENABLED=true
+```
+
+Install dependencies and start server:
+```bash
+npm install
+npm start
+# or
+npm run dev
+```
+
+Server runs on: http://localhost:3000
+
+### 2️⃣ Frontend Setup
+```powershell
+cd "c:\Users\Administrator\Desktop\db\Hotel Booking System\Frontend"
+```
+
+Serve frontend (recommended to avoid CORS):
+```bash
+python -m http.server 8080
+```
+
+Open: http://localhost:8080
+
+### 3️⃣ Database Setup (MySQL)
+1. Install MySQL
+2. Create database:
+   ```sql
+   CREATE DATABASE luxury_hotel;
+   ```
+3. Import schema:
+   ```bash
+   mysql -u root -p luxury_hotel < Backend/database/database.sql
+   ```
+4. App auto-creates missing tables if needed
+
+## 🧠 Caching Layers Explained
+
+### 🔹 L1 Cache – In-Memory
+- Uses JavaScript Map
+- Extremely fast
+- Cleared on server restart
+- Used for:
+  - Rooms
+  - Availability checks
+  - Meals
+  - Spa services
+  - Dashboard stats
+
+### 🔹 L2 Cache – Redis
+- Shared across servers
+- Survives restarts
+- Optional but recommended
+- Used for:
+  - Frequently accessed read data
+  - High-traffic endpoints
+  - Admin dashboard
+
+### 🔹 Cache Priority
+L1 → L2 → MySQL
+
+## 🧩 Example Cache Flow (Rooms)
+```javascript
+// 1. Check memory cache
+// 2. If miss → check Redis
+// 3. If miss → fetch MySQL
+// 4. Save to Redis + Memory
+```
+
+## 🔥 Cached Endpoints
+| Endpoint | Cache |
+|----------|-------|
+| `GET /api/rooms` | L1 + Redis |
+| `GET /api/rooms/availability` | L1 + Redis |
+| `GET /api/meals` | L1 + Redis |
+| `GET /api/spa/services` | L1 + Redis |
+| `GET /api/admin/dashboard` | Redis (short TTL) |
+
+**Cache Invalidation Happens On:**
+- Booking creation / cancellation
+- Room updates
+- Meal or spa updates
+- Admin actions
+
+## 🔐 Authentication
+- JWT-based authentication
+- Token expiry: 7 days
+- Protected routes:
+  - `/api/auth/me`
+  - `/api/admin/*`
+
+## ⚠️ Important Notes
+- MySQL is the single source of truth
+- Never cache:
+  - Passwords
+  - JWT tokens
+  - Sensitive user data
+- Redis can be disabled by setting:
+  ```env
+  REDIS_ENABLED=false
+  ```
+
+## 🐛 Troubleshooting
+
+### Backend Cannot Connect to MySQL
+- Check `hotel.env`
+- Ensure MySQL is running
+- Verify port 3306
+
+### Redis Not Working
+- Ensure Redis server is running
+- Set `REDIS_ENABLED=true`
+- If Redis fails, system auto-falls back to L1 + MySQL
+
+### Stale Data
+- Ensure cache invalidation is triggered
+- Reduce Redis TTL if needed
+
+## 🚀 Performance Benefits
+| Feature | Without Cache | With Cache |
+|---------|--------------|------------|
+| Room listing | Slow | ⚡ Instant |
+| Availability check | Heavy DB load | 🚀 Cached |
+| Dashboard | Multiple queries | 🧠 Cached stats |
+
+## 🔐 Security Considerations
+- Change `JWT_SECRET` in production
+- Use HTTPS
+- Secure Redis with password
+- Restrict Redis to private network
+- Validate all inputs
+
+## 🧭 Future Enhancements
+- Redis TTL fine-tuning
+- Cache warming on startup
+- Redis pub/sub for multi-server sync
+- Read replicas
+- Rate limiting
+
+## 📞 Support & Development Tips
+- Use Postman / Thunder Client for API testing
+- Enable MySQL logs for debugging
+- Monitor Redis memory usage
+- Restart server to clear L1 cache
+
 
 ## Troubleshooting
 
 - Backend cannot connect to MySQL: verify `hotel.env` credentials, ensure MySQL is running and reachable.
 - Frontend CORS issues: serve the static `Frontend` folder via a simple HTTP server as shown above.
-
----
-
-If you want, I can also: 
-- Add a minimal `CONTRIBUTING.md` with commit message conventions, or
-- Create a small script in `package.json` to run the frontend and backend together.
-
